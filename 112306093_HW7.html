@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>112306093_Portfolio</title>
+    <link rel="stylesheet" href="112306093_CSS_HW5.css">
+    <style>
+        .music-form {
+            display: none;
+            margin-top: 10px;
+        }
+        .music-item {
+            text-align: center;
+            width: 100px;
+        }
+        .music-item img {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .music-item span {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #007acc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .music-item:hover img {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
+        .music-item:hover span {
+            color: #ff6600;
+        }
+        #add-music {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+        .right-panel {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="left-panel">
+            <div class="photo-panel"></div>
+            <div class="text-content">
+                <h3 id="editable-name">Jack Reacher</h3>
+                <button id="edit-name">Edit</button>
+                <h2>About Me</h2>
+                <p>Hi! I am Bing Yi Lin, a sophomore at NCCU studying Management Information Systems. I love programming and enjoy exploring new technologies.</p>
+                <p>Contact Me: <a href="mailto:c104n29@gmail.com" class="contact-email">c104n29@gmail.com</a></p>
+                <img src="./school.jpg" height="75" width="150" alt="NCCU Logo">
+            </div>
+        </div>
+        <div class="right-panel">
+            <div class="section">
+                <h2>Education</h2>
+                <ul class="timeline">
+                    <li>
+                        <span class="year">2023 - Now:</span> 
+                        <span class="description">National Chengchi University (NCCU), Management Information Systems</span>
+                    </li>
+                    <li>
+                        <span class="year">2021 - 2023:</span> 
+                        <span class="description">Kaohsiung Senior High School</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="section">
+                <h2>Homework List</h2>
+                <ul>
+                    <li>
+                        <strong>HW1</strong> - 
+                        <a href="https://github.com/Eton433/IntroductonToComputerScience.git" target="_blank" class="url">
+                            https://github.com/Eton433/IntroductonToComputerScience.git
+                        </a>
+                    </li>
+                    <li>
+                        <strong>HW2</strong> - 
+                        <a href="https://github.com/Eton433/IntroductionToComputerScience.git" target="_blank" class="url">
+                            https://github.com/Eton433/IntroductionToComputerScience.git
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="section">
+                <h2>Favorite Music</h2>
+                <div class="music" id="music-list">
+                    <div class="music-item">
+                        <a href="https://www.youtube.com/watch?v=F5FlN-NBGo8" target="_blank">
+                            <img src="./youtube.jpg" alt="Song 1">
+                        </a>
+                        <span>給我一個理由忘記</span>
+                    </div>
+                    <div class="music-item">
+                        <a href="https://www.youtube.com/watch?v=5wmfXve11rM" target="_blank">
+                            <img src="./youtube.jpg" alt="Song 2">
+                        </a>
+                        <span>紅豆</span>
+                    </div>
+                    <div class="music-item">
+                        <a href="https://www.youtube.com/watch?v=6Q0Pd53mojY" target="_blank">
+                            <img src="./youtube.jpg" alt="Song 3">
+                        </a>
+                        <span>夜曲</span>
+                    </div>
+                    <div class="music-item">
+                        <a href="https://www.youtube.com/watch?v=syFZfO_wfMQ" target="_blank">
+                            <img src="./youtube.jpg" alt="Song 4">
+                        </a>
+                        <span>Night Changes</span>
+                    </div>
+                </div>
+                <p class="note">這些是我的最愛歌曲，給我生活帶來了許多靈感。</p>
+                <button id="add-music">Add Music</button>
+                <div class="music-form" id="music-form">
+                    <input type="text" id="music-link" placeholder="Enter music link">
+                    <input type="text" id="music-name" placeholder="Enter music name">
+                    <button id="submit-music">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Add Music Functionality
+        document.getElementById('add-music').addEventListener('click', () => {
+            document.getElementById('music-form').style.display = 'block';
+        });
+
+        document.getElementById('submit-music').addEventListener('click', () => {
+            const link = document.getElementById('music-link').value;
+            const name = document.getElementById('music-name').value;
+
+            if (link && name) {
+                const musicList = document.getElementById('music-list');
+                const musicItem = document.createElement('div');
+                musicItem.classList.add('music-item');
+
+                musicItem.innerHTML = `
+                    <a href="${link}" target="_blank">
+                        <img src="./youtube.jpg" alt="Music">
+                    </a>
+                    <span>${name}</span>
+                `;
+
+                musicList.appendChild(musicItem);
+                document.getElementById('music-form').style.display = 'none';
+                document.getElementById('music-link').value = '';
+                document.getElementById('music-name').value = '';
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        // Edit Name Functionality
+        let isEditing = false;
+        document.getElementById('edit-name').addEventListener('click', () => {
+            const nameElement = document.getElementById('editable-name');
+            const button = document.getElementById('edit-name');
+
+            if (isEditing) {
+                const input = document.getElementById('name-input');
+                nameElement.textContent = input.value;
+                button.textContent = 'Edit';
+            } else {
+                const currentName = nameElement.textContent;
+                nameElement.innerHTML = `<input id="name-input" value="${currentName}">`;
+                button.textContent = 'Save';
+            }
+            isEditing = !isEditing;
+        });
+    </script>
+</body>
+</html>
